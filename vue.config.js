@@ -3,11 +3,13 @@ module.exports = {
 
   pages: {
     index: 'src/pages/index/main.js',
-    demo: 'src/pages/demo/main.js',
+    corp: 'src/pages/corp/main.js',
+    student: 'src/pages/student/main.js',
   },
 
   configureWebpack: {
     externals: {
+      weui: 'weui',
       vue: 'Vue',
     },
   },
