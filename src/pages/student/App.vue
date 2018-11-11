@@ -1,14 +1,33 @@
 <template>
-  <div id="app" class="page">
-    <div class="page__hd">
-      <h1 class="page__title">学生用户注册</h1>
-      <p class="page__desc"></p>
-    </div>
-    <div class="page__bd">
-    </div>
+  <div id="app">
+    <router-view/>
   </div>
 </template>
 
+<script>
+import { mapActions } from 'vuex';
+
+export default {
+  name: 'App',
+  metaInfo: {
+    title: '学生用户',
+    titleTemplate: '学生用户 - %s',
+  },
+  mounted() {
+    this.load();
+  },
+  methods: {
+    ...mapActions(['load']),
+  },
+};
+</script>
+
 <style lang="less">
 @import '~@/style/common.less';
+
+.weui-loadmore {
+  position: absolute;
+  top: 40%;
+  width: 100%;
+}
 </style>

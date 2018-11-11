@@ -19,7 +19,7 @@ import { mapState, mapMutations } from 'vuex';
 import * as types from '../store/mutation-types';
 
 export default {
-  name: 'Step1',
+  name: 'Step3',
   metaInfo: {
     title: '等待审核结果',
   },
@@ -33,9 +33,6 @@ export default {
   },
   computed: {
     ...mapState(['step', 'status']),
-    processStatus() {
-      return (this.step === 2 && this.status === '3') ? 'error' : 'process';
-    },
   },
 };
 </script>

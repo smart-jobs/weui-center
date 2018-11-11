@@ -1,8 +1,8 @@
 <template>
   <div class="page">
     <div class="page__hd">
-      <h1 class="page__title">企业用户注册</h1>
-      <p class="page__desc">为企业管理员注册通行证</p>
+      <h1 class="page__title">学生用户注册</h1>
+      <p class="page__desc">通过微信注册通行证</p>
     </div>
     <form ref="form" class="label-right">
       <mt-field label="姓名" placeholder="请输入管理员姓名" v-model="form.name" required
@@ -11,10 +11,6 @@
         :state="errors.mobile"></mt-field>
       <mt-field label="邮箱" placeholder="请输入邮箱地址" type="email" v-model="form.email"
         :state="errors.email"></mt-field>
-      <!-- <mt-field label="密码" placeholder="请输入安全密码" type="password" v-model="form.password" required
-        :state="errors.password"></mt-field>
-      <mt-field label="确认" placeholder="请重新输入密码" type="password" v-model="form.confirm" required
-        :state="errors.confirm"></mt-field> -->
     </form>
     <div class="weui-btn-area">
         <button class="weui-btn weui-btn_primary" @click="onSubmit">提交</button>
@@ -45,14 +41,6 @@ export default {
           { type: 'regexp', pattern: /^1[3-8]\d{9}$/, message: '手机号不正确' },
         ],
         email: { type: 'email', message: '电子邮箱不正确' },
-        // password: { type: 'string', required: true, message: '密码不能为空' },
-        // confirm: (rule, value, callback) => {
-        //   const errors = [];
-        //   if (this.form.password !== value) {
-        //     errors.push(new Error('密码输入不一致', rule.field));
-        //   }
-        //   callback(errors);
-        // },
       }),
     };
   },

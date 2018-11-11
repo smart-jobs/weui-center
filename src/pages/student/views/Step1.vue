@@ -1,10 +1,10 @@
 <template>
   <div>
     <form ref="form" class="label-right">
-      <mt-field label="企业名称" placeholder="请输入企业名称" v-model="form.corpname" required
-        :state="errors.corpname" :readonly="!isFirst"></mt-field>
-      <code-field label="注册学校" placeholder="请选择注册学校" type="unit" v-model="form.unit" required
-        :state="errors.unit"></code-field>
+      <mt-field label="毕业年份" placeholder="请选择毕业年份" v-model="form.year" required
+        :state="errors.year"></mt-field>
+      <code-field label="身份证号" placeholder="请输入身份证号" v-model="form.sfzh" required
+        :state="errors.sfzh"></code-field>
     </form>
     <div class="weui-btn-area">
       <button class="weui-btn weui-btn_primary" @click="onSubmit">下一步</button>
@@ -13,51 +13,42 @@
 </template>
 
 <script>
-import { mapState, mapMutations, mapActions } from 'vuex';
+import { mapMutations, mapActions } from 'vuex';
 import Validator from 'async-validator';
 import { Message } from 'element-ui';
 import { MessageBox } from 'mint-ui';
 import * as types from '../store/mutation-types';
-import CodeField from '@/components/CodeField.vue';
 
 export default {
   name: 'Step1',
   metaInfo: {
     title: '创建企业信息',
   },
-  components: {
-    CodeField,
-  },
   mounted() {
     this.setStep(0);
-    if (!this.isFirst) {
-      this.form.corpname = this.userinfo.corpname;
-    }
   },
   data() {
     return {
-      form: {
-        corpname: this.userinfo && this.userinfo.corpname,
-      },
+      form: {},
       errors: {},
       validator: new Validator({
         // 表单验证规则
-        corpname: { type: 'string', required: true, message: '企业名称不能为空' },
-        unit: { type: 'string', required: true, message: '注册学校不能为空' },
+        year: { type: 'string', required: true, message: '毕业年份不能为空' },
+        sfzh: { type: 'string', required: true, message: '身份证号不能为空' },
       }),
     };
   },
   methods: {
     ...mapMutations({
-      setStep: types.REG_STEP,
+      setStep: types.REG_STEP, setReg: types.REG_UPDATED,
     }),
-    ...mapActions(['register']),
+    ...mapActions(['findBase']),
     onSubmit() {
       this.validator.validate(this.form, (errors, fields) => {
         if (errors) {
           return this.handleErrors(errors, fields);
         }
-        this.handleCreate();
+        this.handleNext();
         return true;
       });
     },
@@ -71,19 +62,18 @@ export default {
       // eslint-disable-next-line no-console
       console.debug(errors, fields);
     },
-    async handleCreate() {
-      const res = await this.register(this.form);
+    async handleNext() {
+      const res = await this.findBase(this.form);
       this.$checkRes(res, () => {
-        MessageBox.alert('创建企业成功').then(() => {
+        if (!res) {
+          MessageBox.alert('非本省高校毕业生，请完善学籍信息').then(() => {
+            this.setReg(this.form);
+            this.$router.push('/stpe3');
+          });
+        } else {
           this.$router.push('/stpe2');
-        });
+        }
       });
-    },
-  },
-  computed: {
-    ...mapState(['step', 'status', 'userinfo']),
-    isFirst() {
-      return !this.userinfo || !this.userinfo.corpname;
     },
   },
 };
