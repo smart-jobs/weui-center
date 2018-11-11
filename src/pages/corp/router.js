@@ -4,7 +4,7 @@ import Home from './views/Home.vue';
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   // mode: 'history',
   base: process.env.BASE_URL,
   routes: [
@@ -14,7 +14,7 @@ export default new Router({
     },
     {
       path: '/create_user',
-      component: () => import(/* webpackChunkName: "corp_create_user" */ './views/CreateUser.vue'),
+      component: () => import(/* webpackChunkName: "corp_user_form" */ './views/UserForm.vue'),
     },
     {
       path: '/register',
@@ -36,3 +36,5 @@ export default new Router({
     },
   ],
 });
+
+export default router;

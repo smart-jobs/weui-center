@@ -14,6 +14,13 @@ module.exports = {
     },
   },
 
+  pluginOptions: {
+    axios: {
+      // 插件可以作为 `options.pluginOptions.axios` 访问这些选项。
+      baseUrl: '/weixin/api',
+    },
+  },
+
   devServer: {
     before(app) {
       app.use((req, res, next) => {
@@ -22,13 +29,11 @@ module.exports = {
         next();
       });
     },
-    historyApiFallback: {
-      rewrites: [
-        { from: /^\/$/, to: '/index.html' },
-        { from: '^/main', to: '/main.html' },
-        { from: '^/demo', to: '/demo.html' },
-        { from: /./, to: '/404.html' },
-      ],
+    proxy: {
+      '/weixin': {
+        target: 'http://localhost:9000',
+        // target: 'http://smart.chinahuian.cn',
+      },
     },
   },
 };

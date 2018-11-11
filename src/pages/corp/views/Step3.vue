@@ -15,9 +15,8 @@
 </template>
 
 <script>
-import { createNamespacedHelpers } from 'vuex';
-
-const { mapState, mapMutations } = createNamespacedHelpers('register');
+import { mapState, mapMutations } from 'vuex';
+import * as types from '../store/mutation-types';
 
 export default {
   name: 'Step1',
@@ -25,10 +24,12 @@ export default {
     title: '等待审核结果',
   },
   mounted() {
-    this.nextStep(2);
+    this.setStep(2);
   },
   methods: {
-    ...mapMutations(['nextStep']),
+    ...mapMutations({
+      setStep: types.REG_STEP,
+    }),
   },
   computed: {
     ...mapState(['step', 'status']),

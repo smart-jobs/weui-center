@@ -13,9 +13,8 @@
 </template>
 
 <script>
-import { createNamespacedHelpers } from 'vuex';
-
-const { mapState, mapMutations } = createNamespacedHelpers('register');
+import { mapState, mapMutations } from 'vuex';
+import * as types from '../store/mutation-types';
 
 export default {
   name: 'Step1',
@@ -23,10 +22,12 @@ export default {
     title: '完善企业信息',
   },
   mounted() {
-    this.nextStep(1);
+    this.setStep(1);
   },
   methods: {
-    ...mapMutations(['nextStep']),
+    ...mapMutations({
+      setStep: types.REG_STEP,
+    }),
   },
   computed: {
     ...mapState(['step', 'status']),

@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import App from './App.vue';
-import '@/plugins/mint-ui';
+import '@/plugins/meta';
 
 Vue.config.productionTip = false;
 

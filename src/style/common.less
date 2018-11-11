@@ -48,14 +48,14 @@ body, .page {
   left: 0;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  z-index: 1; // fix 滑动几次后可滚动区域会卡住的问题
+  // z-index: 1; // fix 滑动几次后可滚动区域会卡住的问题
 }
 
 .page__hd {
   padding: 40px;
 }
   
-.page__bd {}
+// .page__bd {}
 
 .page__bd_spacing {
   padding: 0 15px;
@@ -342,4 +342,39 @@ body, .page {
       padding-left:constant(safe-area-inset-left);
       padding-right:constant(safe-area-inset-right);
   }
+}
+
+@media screen and (max-width: 380px) { /*当屏幕尺寸小于380px时，应用下面的CSS样式*/
+    .el-message {
+        min-width: 200px !important;
+        max-width: 90%;
+        .el-message__content {
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+    }
+}
+
+.mint-field[required] .mint-cell-text:before {
+    content: "*";
+    color: #f56c6c;
+    margin-right: 4px;
+}
+.mint-indicator>div{
+    z-index: 1000;
+}
+.label-right .mint-cell-title {
+    text-align: right;
+    .mint-cell-text {
+        margin-right: 20px;
+    }
+}
+.single-line {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.right {
+    float: right;
 }
