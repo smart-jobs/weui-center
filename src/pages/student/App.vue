@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 
 export default {
   name: 'App',
@@ -16,6 +16,9 @@ export default {
   mounted() {
     this.load();
   },
+  computed: {
+    ...mapState(['loading']),
+  },
   methods: {
     ...mapActions(['load']),
   },
@@ -25,9 +28,4 @@ export default {
 <style lang="less">
 @import '~@/style/common.less';
 
-.weui-loadmore {
-  position: absolute;
-  top: 40%;
-  width: 100%;
-}
 </style>

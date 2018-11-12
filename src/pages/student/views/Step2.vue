@@ -1,5 +1,9 @@
 <template>
   <div>
+    <el-steps :active="1" finish-status="success" simple>
+      <el-step title="步骤1" ></el-step>
+      <el-step title="步骤2" ></el-step>
+    </el-steps>
     <div class="weui-form-preview">
       <div class="weui-form-preview__hd">
         <label class="weui-form-preview__label">姓名</label>

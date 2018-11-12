@@ -48,7 +48,7 @@ export const actions = {
     // LOAD PRESET DICT
     if (PRESET[payload]) {
       commit(LOADED, { category: payload, items: PRESET[payload] });
-      return { errcode: 0, errmsg: 'ok' };
+      return PRESET[payload];
     }
 
     let res;

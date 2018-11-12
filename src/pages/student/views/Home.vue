@@ -11,14 +11,17 @@
         <div class="weui-panel__hd">
           <span>我的学籍</span>
           <button class="weui-btn weui-btn_mini weui-btn_plain-default right"
-            v-if="!register" @click="handleRegister">注册学籍信息</button>
+            v-if="userinfo && userinfo.role == 'user'" @click="handleRegister">注册学籍信息</button>
         </div>
-        <div class="weui-panel__bd" v-if="units && units.length>0">
-          <div class="weui-media-box weui-media-box_text" v-for="(item,index) in units" :key="'unit_' + index">
-            <h4 class="weui-media-box__title">{{item._tenant | dict(codes['unit'])}}</h4>
+        <div class="weui-panel__bd" v-if="info">
+          <div class="weui-media-box weui-media-box_text">
+            <h4 class="weui-media-box__title">{{info.yxmc}}</h4>
+            <p class="weui-media-box__desc">
+              {{info.zymc}} [{{info.xl}}]
+            </p>
             <ul class="weui-media-box__info">
-              <li class="weui-media-box__info__meta">学校代码：{{item._tenant}}</li>
-              <li class="weui-media-box__info__meta weui-media-box__info__meta_extra">注册时间：{{item.meta.createdAt | date('YYYY-MM-DD') }}</li>
+              <li class="weui-media-box__info__meta">毕业年份：{{reginfo.year}}</li>
+              <li class="weui-media-box__info__meta weui-media-box__info__meta_extra">注册时间：{{reginfo.meta.createdAt | date('YYYY-MM-DD') }}</li>
             </ul>
           </div>
         </div>
@@ -31,10 +34,9 @@
 </template>
 
 <script>
-import { mapState, mapActions, createNamespacedHelpers } from 'vuex';
+import { mapState } from 'vuex';
+import _ from 'lodash';
 import { date, dict } from '@/util/filters';
-
-const { mapState: dictState, mapActions: dictActions } = createNamespacedHelpers('dict');
 
 export default {
   name: 'StudentHome',
@@ -42,13 +44,7 @@ export default {
     title: '学生用户',
     titleTemplate: null,
   },
-  mounted() {
-    // this.load();
-    this.loadDict('unit');
-  },
   methods: {
-    ...mapActions(['load']),
-    ...dictActions({ loadDict: 'load' }),
     handleCreate() {
       this.$router.push('/create');
     },
@@ -57,13 +53,15 @@ export default {
     },
   },
   computed: {
-    ...mapState(['userinfo', 'units']),
-    ...dictState(['codes']),
+    ...mapState(['userinfo', 'reginfo']),
     username() {
       return (this.userinfo && this.userinfo.name) || '未注册';
     },
     yxmc() {
-      return (this.register && this.register.yxmc) || '未注册学籍信息';
+      return (this.reginfo && _.get(this.reginfo, 'info.yxmc')) || '未注册学籍信息';
+    },
+    info() {
+      return this.reginfo && this.reginfo.info;
     },
   },
   filters: {

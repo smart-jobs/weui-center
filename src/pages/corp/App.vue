@@ -31,7 +31,8 @@ export default {
 
 <style lang="less">
 @import '~@/style/common.less';
-
+</style>
+<style scoped>
 .weui-loadmore {
   position: absolute;
   top: 40%;

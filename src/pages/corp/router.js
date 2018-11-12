@@ -21,6 +21,10 @@ const router = new Router({
       component: () => import(/* webpackChunkName: "corp_register" */ './views/Register.vue'),
       children: [
         {
+          path: '/',
+          redirect: 'step1',
+        },
+        {
           path: 'step1',
           component: () => import(/* webpackChunkName: "corp_register_step1" */ './views/Step1.vue'),
         },
@@ -31,6 +35,10 @@ const router = new Router({
         {
           path: 'step3',
           component: () => import(/* webpackChunkName: "corp_register_step3" */ './views/Step3.vue'),
+        },
+        {
+          path: 'step4',
+          component: () => import(/* webpackChunkName: "corp_register_step4" */ './views/Step4.vue'),
         },
       ],
     },

@@ -75,7 +75,7 @@ export default {
       const res = await this.register(this.form);
       this.$checkRes(res, () => {
         MessageBox.alert('创建企业成功').then(() => {
-          this.$router.push('/stpe2');
+          this.$router.push('/step2');
         });
       });
     },

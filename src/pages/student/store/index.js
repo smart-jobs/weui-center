@@ -3,6 +3,7 @@
 /* eslint-disable no-param-reassign */
 import Vue from 'vue';
 import Vuex from 'vuex';
+import _ from 'lodash';
 import * as types from './mutation-types';
 import util from '@/util/user-util';
 import * as dict from '@/store/dict';
@@ -22,34 +23,39 @@ export default new Vuex.Store({
   },
   state: {
     userinfo: null,
-    register: null,
+    reginfo: null,
+    regform: null,
     infobase: null,
     step: 0,
+    loading: false,
   },
   mutations: {
     [types.USER_INFO](state, { userinfo }) {
       state.userinfo = userinfo;
-      state.register = userinfo && userinfo.reg;
+      state.reginfo = userinfo && userinfo.reg;
     },
     [types.REG_UPDATED](state, payload) {
-      state.register = payload;
+      state.reginfo = payload;
     },
     [types.BASE_LOADED](state, payload) {
       state.infobase = payload;
+    },
+    [types.REG_STEP](state, payload) {
+      state.step = payload;
+    },
+    [types.REG_FORM](state, payload) {
+      state.regform = payload;
     },
   },
   actions: {
     async load({ commit, state }) {
       commit(types.USER_INFO, { userinfo: util.user, token: util.token });
       if (!state.userinfo) return;
-      const { role } = state.userinfo;
-      if (role === 'guest') {
-        const res = await this.$axios.$post(api.login);
-        if (!res.errcode) {
-          const { userinfo, token } = res;
-          // 保存用户信息
-          util.save({ userinfo, token });
-        }
+      const res = await this.$axios.$post(api.login);
+      if (!res.errcode) {
+        const { userinfo, token } = res;
+        // 保存用户信息
+        util.save({ userinfo, token });
       }
     },
     async createUser({ commit }, payload) {
@@ -64,9 +70,9 @@ export default new Vuex.Store({
       }
       return res;
     },
-    async register({ commit }, payload) {
-      const { corpname, unit } = payload;
-      const res = await this.$axios.$post(api.register, { unit }, { corpname });
+    async register({ commit, state }, payload) {
+      const _tenant = _.get(state, 'infobase.yxdm');
+      const res = await this.$axios.$post(api.register, { _tenant }, payload);
       if (!res.errcode) {
         const { userinfo, token, newReg } = res;
         // 保存用户信息

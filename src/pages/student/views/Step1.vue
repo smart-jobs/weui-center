@@ -1,10 +1,14 @@
 <template>
   <div>
+    <el-steps :active="0" finish-status="success" simple>
+      <el-step title="步骤1" ></el-step>
+      <el-step title="步骤2" ></el-step>
+    </el-steps>
     <form ref="form" class="label-right">
       <mt-field label="毕业年份" placeholder="请选择毕业年份" v-model="form.year" required
         :state="errors.year"></mt-field>
-      <code-field label="身份证号" placeholder="请输入身份证号" v-model="form.sfzh" required
-        :state="errors.sfzh"></code-field>
+      <mt-field label="身份证号" placeholder="请输入身份证号" v-model="form.sfzh" required
+        :state="errors.sfzh"></mt-field>
     </form>
     <div class="weui-btn-area">
       <button class="weui-btn weui-btn_primary" @click="onSubmit">下一步</button>
@@ -13,7 +17,7 @@
 </template>
 
 <script>
-import { mapMutations, mapActions } from 'vuex';
+import { mapMutations, mapActions, mapState } from 'vuex';
 import Validator from 'async-validator';
 import { Message } from 'element-ui';
 import { MessageBox } from 'mint-ui';
@@ -29,7 +33,7 @@ export default {
   },
   data() {
     return {
-      form: {},
+      form: this.regform || {},
       errors: {},
       validator: new Validator({
         // 表单验证规则
@@ -38,9 +42,12 @@ export default {
       }),
     };
   },
+  computed: {
+    ...mapState(['regform']),
+  },
   methods: {
     ...mapMutations({
-      setStep: types.REG_STEP, setReg: types.REG_UPDATED,
+      setStep: types.REG_STEP, setReg: types.REG_FORM,
     }),
     ...mapActions(['findBase']),
     onSubmit() {
@@ -68,10 +75,10 @@ export default {
         if (!res) {
           MessageBox.alert('非本省高校毕业生，请完善学籍信息').then(() => {
             this.setReg(this.form);
-            this.$router.push('/stpe3');
+            this.$router.push('/register/step3');
           });
         } else {
-          this.$router.push('/stpe2');
+          this.$router.push('/register/step2');
         }
       });
     },

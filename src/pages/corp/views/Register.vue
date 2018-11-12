@@ -26,16 +26,13 @@ export default {
   },
   data() {
     return {
-      steps: ['第一步：创建企业', '第二步：完善信息', '第三步：等待审核'],
+      steps: ['第一步：创建企业', '第二步：完善信息', '第三步：等待审核', '审核通过，企业信息注册完成'],
     };
   },
   beforeRouteEnter(to, from, next) {
     next((vm) => {
       if (!vm.userinfo || vm.userinfo.role !== 'corp') {
         vm.$router.replace('/');
-      }
-      if (to.path === '/register') {
-        vm.$router.replace(`/register/step${vm.step + 1}`);
       }
     });
   },

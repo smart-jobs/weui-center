@@ -18,7 +18,7 @@ const Plugin = {
       if (!_.isFunction(okText) && _.isObject(okText) && okText != null) {
         ({ okText: _okText = '操作成功', errText: _errText } = okText);
       }
-      const { errcode = 0, errmsg } = res;
+      const { errcode = 0, errmsg } = res || {};
       if (errcode === 0) {
         if (_.isFunction(_okText)) {
           return _okText();

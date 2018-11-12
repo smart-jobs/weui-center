@@ -1,25 +1,29 @@
 <template>
   <div>
+    <el-steps :active="1" finish-status="success" simple>
+      <el-step title="步骤1" ></el-step>
+      <el-step title="步骤2" ></el-step>
+    </el-steps>
     <form ref="form" class="label-right">
       <mt-field label="毕业年份" placeholder="请选择毕业年份" v-model="form.year" required
         :state="errors.year" :readonly="true"></mt-field>
-      <code-field label="身份证号" placeholder="请输入身份证号" v-model="form.sfzh" required
-        :state="errors.sfzh" :readonly="true"></code-field>
-      <code-field label="姓名" placeholder="请输入姓名" v-model="form.xm" required
-        :state="errors.xm"></code-field>
-      <code-field label="性别" placeholder="请输入性别" v-model="form.xb" required
-        :state="errors.xb"></code-field>
-      <code-field label="院校名称" placeholder="请输入院校名称" v-model="form.yxmc" required
-        :state="errors.yxmc"></code-field>
-      <code-field label="专业名称" placeholder="请输入专业名称" v-model="form.zymc" required
-        :state="errors.zymc"></code-field>
-      <code-field label="学历" placeholder="请输入学历" v-model="form.xl" required
-        :state="errors.xl"></code-field>
+      <mt-field label="身份证号" placeholder="请输入身份证号" v-model="form.sfzh" required
+        :state="errors.sfzh" :readonly="true"></mt-field>
+      <mt-field label="姓名" placeholder="请输入姓名" v-model="form.xm" required
+        :state="errors.xm"></mt-field>
+      <mt-field label="性别" placeholder="请输入性别" v-model="form.xb" required
+        :state="errors.xb"></mt-field>
+      <mt-field label="院校名称" placeholder="请输入院校名称" v-model="form.yxmc" required
+        :state="errors.yxmc"></mt-field>
+      <mt-field label="专业名称" placeholder="请输入专业名称" v-model="form.zymc" required
+        :state="errors.zymc"></mt-field>
+      <mt-field label="学历" placeholder="请输入学历" v-model="form.xl" required
+        :state="errors.xl"></mt-field>
     </form>
     <div class="weui-msg__opr-area">
       <p class="weui-btn-area">
+        <button class="weui-btn weui-btn_primary" @click="onSubmit">完成注册</button>
         <button class="weui-btn weui-btn_default" @click="$router.push('step1')">上一步</button>
-        <button class="weui-btn weui-btn_primary">完成注册</button>
       </p>
     </div>
   </div>
@@ -39,14 +43,17 @@ export default {
   },
   mounted() {
     this.setStep(2);
+    this.$nextTick(() => {
+      this.form = {
+        year: this.regform && this.regform.year,
+        sfzh: this.regform && this.regform.sfzh,
+        xm: this.userinfo && this.userinfo.name,
+      };
+    });
   },
   data() {
     return {
-      form: {
-        year: this.register && this.register.year,
-        sfzh: this.register && this.register.sfzh,
-        xm: this.userinfo && this.userinfo.name,
-      },
+      form: {},
       errors: {},
       validator: new Validator({
         // 表单验证规则
@@ -70,7 +77,7 @@ export default {
         if (errors) {
           return this.handleErrors(errors, fields);
         }
-        this.handleNext();
+        this.handleRegister();
         return true;
       });
     },
@@ -85,7 +92,7 @@ export default {
       console.debug(errors, fields);
     },
     async handleRegister() {
-      const res = await this.handleRegister(this.form);
+      const res = await this.register(this.form);
       this.$checkRes(res, () => {
         MessageBox.alert('注册学籍信息成功').then(() => {
           this.$router.push('/');
@@ -94,7 +101,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(['register']),
+    ...mapState(['userinfo', 'regform']),
   },
 };
 </script>

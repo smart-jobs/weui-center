@@ -5,10 +5,6 @@
       <p class="page__desc">{{steps[step]}}</p>
     </div>
     <div class="page__bd">
-      <el-steps :active="step" finish-status="success" simple>
-        <el-step title="步骤1" ></el-step>
-        <el-step title="步骤2" ></el-step>
-      </el-steps>
       <router-view></router-view>
     </div>
   </div>
@@ -32,9 +28,6 @@ export default {
     next((vm) => {
       if (!vm.userinfo || vm.userinfo.role !== 'user') {
         vm.$router.replace('/');
-      }
-      if (to.path === '/register') {
-        vm.$router.replace(`/register/step${vm.step + 1}`);
       }
     });
   },

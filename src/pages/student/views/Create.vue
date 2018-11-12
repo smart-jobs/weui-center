@@ -9,7 +9,7 @@
         :state="errors.name"></mt-field>
       <mt-field label="手机号" placeholder="请输入手机号" type="number" v-model="form.mobile" required
         :state="errors.mobile"></mt-field>
-      <mt-field label="邮箱" placeholder="请输入邮箱地址" type="email" v-model="form.email"
+      <mt-field label="邮箱" placeholder="请输入邮箱地址" type="email" v-model="form.email"  required
         :state="errors.email"></mt-field>
     </form>
     <div class="weui-btn-area">
@@ -40,7 +40,7 @@ export default {
           { type: 'string', required: true, message: '手机号不能为空' },
           { type: 'regexp', pattern: /^1[3-8]\d{9}$/, message: '手机号不正确' },
         ],
-        email: { type: 'email', message: '电子邮箱不正确' },
+        email: { type: 'email', required: true, message: '电子邮箱不正确' },
       }),
     };
   },
