@@ -57,18 +57,15 @@ export default new Vuex.Store({
     async load({ commit, state }) {
       commit(types.USER_INFO, { userinfo: util.user, token: util.token });
       if (!state.userinfo) return;
-      const { role } = state.userinfo;
-      if (role === 'guest') {
-        const res = await this.$axios.$post(api.login);
-        if (!res.errcode) {
-          const { userinfo, token } = res;
-          // 保存用户信息
-          util.save({ userinfo, token });
-        }
+      let res = await this.$axios.$post(api.login);
+      if (!res.errcode) {
+        const { userinfo, token } = res;
+        // 保存用户信息
+        util.save({ userinfo, token });
       }
       const { corpid, units = [] } = state.userinfo;
       if (corpid && units.length > 0) {
-        const res = await this.$axios.$post(api.batch, { corpid }, { units });
+        res = await this.$axios.$post(api.batch, { corpid }, { units });
         if (!res.errcode) {
           commit(types.UNITS_LOADED, res);
         }
