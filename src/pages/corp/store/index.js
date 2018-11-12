@@ -55,13 +55,14 @@ export default new Vuex.Store({
   },
   actions: {
     async load({ commit, state }) {
-      commit(types.USER_INFO, { userinfo: util.user, token: util.token });
+      // commit(types.USER_INFO, { userinfo: util.user, token: util.token });
       // if (!state.userinfo) return;
       let res = await this.$axios.$post(api.login);
       if (!res.errcode) {
         const { userinfo, token } = res;
         // 保存用户信息
         util.save({ userinfo, token });
+        commit(types.USER_INFO, { userinfo, token });
       }
       const { corpid, units = [] } = state.userinfo;
       if (corpid && units.length > 0) {

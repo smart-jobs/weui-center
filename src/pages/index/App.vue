@@ -12,7 +12,7 @@
         </p>
       </div>
     </div>
-    <weui-msg type="waiting" title="个人中心" message="正在加载用户信息，请稍候..." v-else/>
+    <weui-msg type="waiting" title="个人中心" message="正在加载用户信息，请稍候..." v-else />
     <div class="weui-footer weui-footer_fixed-bottom">
       <p class="weui-footer__text">吉林省高校毕业生就业指导中心</p>
       <p class="weui-footer__text">Copyright &copy; 2018-2019</p>
@@ -32,7 +32,14 @@ export default {
   metaInfo: {
     title: '个人中心',
   },
-  mounted() {
+  async mounted() {
+    const res = await this.$axios.$post('/mshp/login');
+    if (!res.errcode) {
+      const { userinfo, token } = res;
+      // 保存用户信息
+      util.save({ userinfo, token });
+    }
+
     if (this.guest) {
       return;
     }
