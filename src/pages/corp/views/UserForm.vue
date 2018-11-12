@@ -5,7 +5,7 @@
       <p class="page__desc">为企业管理员注册通行证</p>
     </div>
     <form ref="form" class="label-right">
-      <mt-field label="姓名" placeholder="请输入管理员姓名" v-model="form.name" required
+      <mt-field label="姓名" placeholder="请输入企业管理员姓名" v-model="form.name" required
         :state="errors.name"></mt-field>
       <mt-field label="手机号" placeholder="请输入手机号" type="number" v-model="form.mobile" required
         :state="errors.mobile"></mt-field>
