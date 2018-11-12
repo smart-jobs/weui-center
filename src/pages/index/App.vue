@@ -33,11 +33,15 @@ export default {
     title: '个人中心',
   },
   async mounted() {
-    const res = await this.$axios.$post('/mshp/login');
-    if (!res.errcode) {
-      const { userinfo, token } = res;
-      // 保存用户信息
-      util.save({ userinfo, token });
+    if (!this.user) {
+      const res = await this.$axios.$post('/mshp/login');
+      if (!res.errcode) {
+        const { userinfo, token } = res;
+        // 保存用户信息
+        util.save({ userinfo, token });
+        this.user = util.user;
+        this.guest = util.isGuest;
+      }
     }
 
     if (this.guest) {

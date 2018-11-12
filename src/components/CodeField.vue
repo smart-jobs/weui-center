@@ -61,6 +61,7 @@ export default {
       if (this.selected) {
         this.$emit('input', this.selected);
         this.popupVisible = false;
+        // const data = this.items.find(p=>p.code===this.selected);
       }
     },
     showSelect() {
