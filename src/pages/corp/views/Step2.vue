@@ -5,9 +5,9 @@
       <div class="weui-cells">
         <code-field label="代码类型" type='corpcode' v-model="form.info.corptype" placeholder="请选择代码类型" required></code-field>
         <mt-field label="企业代码" v-model="form.info.corpcode" placeholder="请输入企业代码" required></mt-field>
-        <code-field label="单位规模" type="dwgm" v-model="form.scale.code" placeholder="请选择单位规模" required></code-field>
-        <code-field label="单位性质" type="dwxz" v-model="form.nature.code" placeholder="请选择单位性质" required></code-field>
-        <code-field label="行业类别" type="hylb" v-model="form.industry.code" placeholder="请选择行业类别" required></code-field>
+        <code-field label="单位规模" type="dwgm" mode="pair" v-model="form.scale" placeholder="请选择单位规模" required></code-field>
+        <code-field label="单位性质" type="dwxz" mode="pair" v-model="form.nature" placeholder="请选择单位性质" required></code-field>
+        <code-field label="行业类别" type="hylb" mode="pair" v-model="form.industry" placeholder="请选择行业类别" required></code-field>
         <mt-field label="所在城市" v-model="form.city.name" placeholder="请选择城市" required></mt-field>
         <mt-field label="企业法人" v-model="form.info.legalPerson" placeholder="请输入企业法人" required></mt-field>
         <mt-field label="注册时间" type="date" v-model="form.info.registerTime" placeholder="请选择企业工商注册时间" required></mt-field>

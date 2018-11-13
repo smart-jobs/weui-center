@@ -68,8 +68,14 @@ export default {
   computed: {
     ...mapState(['codes']),
     codeName() {
-      const val = this.value && _.get(this.codes, [this.type, this.value]);
-      return val || this.value;
+      if (this.mode === 'pair') {
+        return this.value.name;
+      }
+      if (this.mode === 'code') {
+        const val = this.value && _.get(this.codes, [this.type, this.value]);
+        return val || this.value;
+      }
+      return this.value;
     },
     options() {
       return this.items.map(p => ({ label: p.name, value: p.code }));
