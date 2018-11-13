@@ -49,10 +49,10 @@ export default {
     }
     if (this.user.role === 'corp') {
       // eslint-disable-next-line no-restricted-globals
-      location.replace('corp.html');
+      location.replace('corp.html?#/');
     } else {
       // eslint-disable-next-line no-restricted-globals
-      location.replace('student.html');
+      location.replace('student.html?#/');
     }
   },
   data() {

@@ -145,9 +145,9 @@ export default {
   //     }
   //   });
   // },
-  activated() {
+  mounted() {
     if (this.reg.status && this.reg.status !== '1') {
-      const reg = _.get(this.reg, ['info', 'contact', 'description']);
+      const reg = _.pick(this.reg, ['info', 'contact', 'description']);
       this.form = _.merge(this.form, reg);
     }
   },
