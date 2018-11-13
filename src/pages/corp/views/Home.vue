@@ -63,7 +63,7 @@ export default {
       return (this.userinfo && this.userinfo.name) || '未注册';
     },
     corpname() {
-      return (this.userinfo && this.userinfo.corpname) || '未注册企业信息';
+      return (this.userinfo && this.userinfo.corpname) || '未登记企业信息';
     },
   },
   filters: {

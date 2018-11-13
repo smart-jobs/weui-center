@@ -31,8 +31,8 @@ module.exports = {
     },
     proxy: {
       '/weixin': {
-        target: 'http://localhost:9000',
-        // target: 'http://smart.chinahuian.cn',
+        // target: 'http://localhost:9000',
+        target: 'http://smart.chinahuian.cn',
       },
     },
   },

@@ -27,6 +27,7 @@ export default {
     type: { type: String, required: true },
     typeDesc: { type: String },
     value: { type: String, default: '' },
+    mode: { type: String, default: 'code' }, // 选值模式：code、name、pair
   },
   async mounted() {
     const res = await this.load(this.type);
@@ -45,6 +46,25 @@ export default {
       items: [],
     };
   },
+  watch: {
+    // eslint-disable-next-line no-unused-vars
+    value(val, oldVal) {
+      if (val != null && val !== undefined && this.items) {
+        if (this.mode === 'name') {
+          const item = this.items.find(p => p.name === val);
+          this.selected = item.code;
+          return;
+        }
+        if (this.mode === 'pair') {
+          const item = this.items.find(p => p.code === val.code);
+          this.selected = item.code;
+          return;
+        }
+        this.selected = val;
+      }
+      // console.log('new: %s, old: %s', val, oldVal)
+    },
+  },
   computed: {
     ...mapState(['codes']),
     codeName() {
@@ -59,8 +79,17 @@ export default {
     ...mapActions(['load']),
     handleSelect() {
       if (this.selected) {
-        this.$emit('input', this.selected);
         this.popupVisible = false;
+        const item = this.items.find(p => p.code === this.selected);
+        if (item && this.mode === 'name') {
+          this.$emit('input', item.name);
+          return;
+        }
+        if (this.mode === 'pair') {
+          this.$emit('input', item);
+          return;
+        }
+        this.$emit('input', this.selected);
         // const data = this.items.find(p=>p.code===this.selected);
       }
     },
