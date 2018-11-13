@@ -29,7 +29,6 @@ export default {
     CodeField,
   },
   mounted() {
-    this.setStep(0);
     if (!this.isFirst) {
       this.form.corpname = this.userinfo.corpname;
     }
@@ -75,7 +74,7 @@ export default {
       const res = await this.register(this.form);
       this.$checkRes(res, () => {
         MessageBox.alert('创建企业成功').then(() => {
-          this.$router.push('/step2');
+          this.$router.replace('step2');
         });
       });
     },

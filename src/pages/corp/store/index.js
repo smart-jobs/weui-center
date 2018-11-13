@@ -52,6 +52,9 @@ export default new Vuex.Store({
         state.register = payload;
       }
     },
+    [types.REG_INIT](state, payload) {
+      state.register = payload;
+    },
   },
   actions: {
     async load({ commit, state }) {
@@ -63,14 +66,17 @@ export default new Vuex.Store({
         // 保存用户信息
         util.save({ userinfo, token });
         commit(types.USER_INFO, { userinfo, token });
+      } else {
+        return res;
       }
-      const { corpid, units = [] } = state.userinfo;
+      const { corpid, units = [] } = state.userinfo || {};
       if (corpid && units.length > 0) {
         res = await this.$axios.$post(api.batch, { corpid }, { units });
         if (!res.errcode) {
           commit(types.UNITS_LOADED, res);
         }
       }
+      return res;
     },
     async createUser({ commit }, payload) {
       // eslint-disable-next-line no-console
@@ -93,6 +99,14 @@ export default new Vuex.Store({
         util.save({ userinfo, token });
         commit(types.USER_INFO, { userinfo, token });
         commit(types.UNIT_CREATED, newCorp);
+      }
+      return res;
+    },
+    async complete({ state, commit }, payload) {
+      const { _tenant, corpid } = state.register;
+      const res = await this.$axios.$post(api.complete, { _tenant, corpid }, payload);
+      if (!res.errcode) {
+        commit(types.UNIT_UPDATED, res);
       }
       return res;
     },

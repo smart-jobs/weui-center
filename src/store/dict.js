@@ -2,11 +2,13 @@
 /* eslint-disable no-shadow */
 // import * as types from './.dict.js';
 import assert from 'assert';
+import _ from 'lodash';
 import { LOADED, PRESET } from './.dict';
 
 const api = {
   listItem: catg => `/naf/code/${catg}/list`,
   listUnit: '/naf/unit/list',
+  listXzqh: level => `/naf/code/xzqh/list?level=${level}`,
 };
 
 // initial state
@@ -55,6 +57,19 @@ export const actions = {
     if (payload === 'unit') {
       // LOAD UNIT DICT
       res = await this.$axios.$get(`${api.listUnit}`);
+    } else if (payload === 'xzqh') {
+      // LOAD XZQH DICT
+      res = await this.$axios.$get(api.listXzqh(1));
+      if (res.errcode) return res;
+      const rs1 = res;
+      res = await this.$axios.$get(api.listXzqh(2));
+      if (res.errcode) return res;
+      const rs2 = res;
+      res = rs1.map((p) => {
+        const prefix = p.code.substr(0, 2);
+        const children = rs2.filter(c => c.code !== p.code && c.code.startsWith(prefix));
+        return { ...p, children };
+      });
     } else {
       // LOAD COMMONS DICT
       res = await this.$axios.$get(`${api.listItem(payload)}`);
@@ -74,6 +89,9 @@ export const mutations = {
     state.items[category] = items;
     state.codes[category] = items.reduce((acc, item) => {
       acc[item.code] = item.name;
+      if (_.isArray(item.children) && item.children.length > 0) {
+        _.forEach(item.children, (p) => { acc[p.code] = p.name; });
+      }
       return acc;
     }, {});
   },

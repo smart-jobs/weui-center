@@ -89,12 +89,12 @@ export default {
       });
     },
   },
-  beforeRouteEnter(to, from, next) {
-    next((vm) => {
-      if (vm.userinfo && vm.userinfo.role !== 'guest') {
-        vm.$router.replace('/');
-      }
-    });
-  },
+  // beforeRouteEnter(to, from, next) {
+  //   next((vm) => {
+  //     if (vm.userinfo && vm.userinfo.role !== 'guest') {
+  //       vm.$router.replace('/');
+  //     }
+  //   });
+  // },
 };
 </script>

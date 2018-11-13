@@ -17,7 +17,9 @@
 
 <script>
 // eslint-disable-next-line no-unused-vars
-import { mapState, mapActions } from 'vuex';
+import _ from 'lodash';
+import { mapState, mapMutations } from 'vuex';
+import * as types from '../store/mutation-types';
 
 export default {
   name: 'Register',
@@ -29,17 +31,28 @@ export default {
       steps: ['第一步：创建企业', '第二步：完善信息', '第三步：等待审核', '审核通过，企业信息注册完成'],
     };
   },
-  beforeRouteEnter(to, from, next) {
-    next((vm) => {
-      if (!vm.userinfo || vm.userinfo.role !== 'corp') {
-        vm.$router.replace('/');
-      }
-    });
+  methods: {
+    ...mapMutations({
+      setStep: types.REG_STEP,
+    }),
   },
+  // beforeRouteEnter(to, from, next) {
+  //   next((vm) => {
+  //     if (!vm.userinfo || vm.userinfo.role !== 'corp') {
+  //       vm.$router.replace('/');
+  //     }
+  //   });
+  // },
   computed: {
-    ...mapState(['step', 'status', 'userinfo']),
+    ...mapState(['register', 'userinfo']),
+    step() {
+      if (this.$route.path === '/register/step2') return 1;
+      if (this.$route.path === '/register/step3') return 2;
+      if (this.$route.path === '/register/step4') return 3;
+      return 0;
+    },
     processStatus() {
-      return (this.step === 2 && this.status === '3') ? 'error' : 'process';
+      return (this.step === 2 && this.register && this.register.status === '3') ? 'error' : 'process';
     },
   },
 };

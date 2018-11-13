@@ -17,8 +17,9 @@ export default {
     title: '企业用户',
     titleTemplate: '企业用户 - %s',
   },
-  mounted() {
-    this.load();
+  async mounted() {
+    const res = await this.load();
+    this.$checkRes(res, () => {});
   },
   computed: {
     ...mapState(['loading']),

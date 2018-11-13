@@ -7,7 +7,7 @@
     <div class="weui-msg__opr-area">
       <p class="weui-btn-area">
         <button class="weui-btn weui-btn_default" @click="$router.push('step2')"
-          v-if="status == '3'">上一步</button>
+          v-if="$router.replace('step2')">上一步</button>
         <button class="weui-btn weui-btn_primary" v-else>完成</button>
       </p>
     </div>
@@ -22,9 +22,6 @@ export default {
   name: 'Step3',
   metaInfo: {
     title: '等待审核结果',
-  },
-  mounted() {
-    this.setStep(2);
   },
   methods: {
     ...mapMutations({

@@ -11,11 +11,15 @@
         <div class="weui-panel__hd">
           <span>学校分站列表</span>
           <button class="weui-btn weui-btn_mini weui-btn_plain-default right"
-            v-if="userinfo && userinfo.role == 'corp'" @click="handleRegister">开通学校账号</button>
+            v-if="userinfo && userinfo.role == 'corp'" @click="handleRegister({})">开通学校账号</button>
         </div>
         <div class="weui-panel__bd" v-if="units && units.length>0">
           <div class="weui-media-box weui-media-box_text" v-for="(item,index) in units" :key="'unit_' + index">
-            <h4 class="weui-media-box__title">{{item._tenant | dict(codes['unit'])}}</h4>
+            <div class="weui-media-box__title">
+              <button class="weui-btn weui-btn_mini weui-btn_plain-primary right"
+                v-if="item.status != 0" @click="handleRegister(item)">{{item.status | status}}</button>
+              <h4>{{item._tenant | dict(codes['unit'])}}</h4>
+            </div>
             <ul class="weui-media-box__info">
               <li class="weui-media-box__info__meta">学校代码：{{item._tenant}}</li>
               <li class="weui-media-box__info__meta weui-media-box__info__meta_extra">注册时间：{{item.meta.createdAt | date('YYYY-MM-DD') }}</li>
@@ -31,8 +35,10 @@
 </template>
 
 <script>
-import { mapState, mapActions, createNamespacedHelpers } from 'vuex';
+// eslint-disable-next-line object-curly-newline
+import { mapState, mapActions, createNamespacedHelpers, mapMutations } from 'vuex';
 import { date, dict } from '@/util/filters';
+import * as types from '../store/mutation-types';
 
 const { mapState: dictState, mapActions: dictActions } = createNamespacedHelpers('dict');
 
@@ -42,22 +48,28 @@ export default {
     title: '企业用户',
     titleTemplate: null,
   },
-  mounted() {
+  async mounted() {
     // this.load();
-    this.loadDict('unit');
+    await this.loadDict('unit');
   },
   methods: {
     ...mapActions(['load']),
+    ...mapMutations({ setReg: types.REG_INIT }),
     ...dictActions({ loadDict: 'load' }),
     handleCreate() {
       this.$router.push('/create_user');
     },
-    handleRegister() {
-      this.$router.push('/register');
+    handleRegister(reg) {
+      this.setReg(reg);
+      let step = Number(reg.status || '0');
+      if (step > 2) step = 2;
+      if (reg.status === '0') step = 3;
+      const to = `/register/step${step + 1}`;
+      this.$router.push(to);
     },
   },
   computed: {
-    ...mapState(['userinfo', 'units']),
+    ...mapState(['userinfo', 'units', 'register']),
     ...dictState(['codes']),
     username() {
       return (this.userinfo && this.userinfo.name) || '未注册';
@@ -67,12 +79,23 @@ export default {
     },
   },
   filters: {
-    date, dict,
+    date,
+    dict,
+    status(value) {
+      if (value === '0') return '注册完成';
+      if (value === '1') return '未完善信息';
+      if (value === '2') return '待审核';
+      if (value === '3') return '审核失败';
+      return '错误状态';
+    },
   },
 };
 </script>
 <style scoped>
-.weui-panel__hd>.weui-btn {
+.weui-panel__hd>.weui-btn{
   line-height: 1.4;
+}
+.weui-media-box__title>.weui-btn{
+  line-height: 1.6;
 }
 </style>

@@ -58,6 +58,7 @@ export default new Vuex.Store({
         util.save({ userinfo, token });
         commit(types.USER_INFO, { userinfo, token });
       }
+      return res;
     },
     async createUser({ commit }, payload) {
       // eslint-disable-next-line no-console
