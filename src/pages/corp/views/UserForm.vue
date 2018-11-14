@@ -84,7 +84,7 @@ export default {
       const res = await this.createUser(this.form);
       this.$checkRes(res, () => {
         MessageBox.alert('注册用户成功').then(() => {
-          this.$router.push('/');
+          this.$router.replace('/');
         });
       });
     },

@@ -77,7 +77,7 @@ export default {
       const res = await this.register(this.infobase);
       this.$checkRes(res, () => {
         MessageBox.alert('注册学籍信息成功').then(() => {
-          this.$router.push('/');
+          this.$router.replace('/');
         });
       });
     },

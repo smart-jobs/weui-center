@@ -16,7 +16,7 @@
     <div class="weui-msg__opr-area">
       <p class="weui-btn-area">
         <button class="weui-btn weui-btn_primary" @click="onSubmit">完成注册</button>
-        <button class="weui-btn weui-btn_default" @click="$router.push('step1')">上一步</button>
+        <button class="weui-btn weui-btn_default" @click="$router.replace('step1')">上一步</button>
       </p>
     </div>
   </div>
@@ -92,7 +92,7 @@ export default {
       const res = await this.register(this.form);
       this.$checkRes(res, () => {
         MessageBox.alert('注册学籍信息成功').then(() => {
-          this.$router.push('/');
+          this.$router.replace('/');
         });
       });
     },

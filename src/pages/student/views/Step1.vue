@@ -75,10 +75,10 @@ export default {
         if (!res) {
           MessageBox.alert('非本省高校毕业生，请完善学籍信息').then(() => {
             this.setReg(this.form);
-            this.$router.push('/register/step3');
+            this.$router.replace('/register/step3');
           });
         } else {
-          this.$router.push('/register/step2');
+          this.$router.replace('/register/step2');
         }
       });
     },
