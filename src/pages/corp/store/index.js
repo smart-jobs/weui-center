@@ -15,6 +15,7 @@ const api = {
   register: '/mshp/corp/register',
   complete: '/corp/complete',
   batch: '/corp/batch',
+  details: '/corp/details',
 };
 
 export default new Vuex.Store({
@@ -52,7 +53,7 @@ export default new Vuex.Store({
         state.register = payload;
       }
     },
-    [types.REG_INIT](state, payload) {
+    [types.REG_INFO](state, payload) {
       state.register = payload;
     },
   },
@@ -106,6 +107,15 @@ export default new Vuex.Store({
       const { _tenant, corpid } = state.register;
       const res = await this.$axios.$post(api.complete, { _tenant, corpid }, payload);
       if (!res.errcode) {
+        commit(types.UNIT_UPDATED, res);
+      }
+      return res;
+    },
+    async details({ commit }, payload) {
+      const { _tenant, corpid } = payload;
+      const res = await this.$axios.$get(api.details, { _tenant, corpid });
+      if (!res.errcode) {
+        commit(types.REG_INFO, res);
         commit(types.UNIT_UPDATED, res);
       }
       return res;

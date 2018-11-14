@@ -54,7 +54,7 @@ export default {
   },
   methods: {
     ...mapActions(['load']),
-    ...mapMutations({ setReg: types.REG_INIT }),
+    ...mapMutations({ setReg: types.REG_INFO }),
     ...dictActions({ loadDict: 'load' }),
     handleCreate() {
       this.$router.push('/create_user');

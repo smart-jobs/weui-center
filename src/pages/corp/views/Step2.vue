@@ -66,6 +66,7 @@ export default {
         info: {},
         contact: {},
         credentials: {},
+        description: null,
       },
       errors: {},
       validator: new Validator({
@@ -101,11 +102,21 @@ export default {
       },
     };
   },
+  async mounted() {
+    if (this.reg.status && this.reg.status !== '1') {
+      const res = await this.details(this.reg);
+      this.$checkRes(res, () => {
+        this.$set(this.form, 'info', res.info || {});
+        this.$set(this.form, 'contact', res.contact || {});
+        this.$set(this.form, 'description', res.description);
+      });
+    }
+  },
   methods: {
     ...mapMutations({
       setStep: types.REG_STEP,
     }),
-    ...mapActions(['complete']),
+    ...mapActions(['complete', 'details']),
     onSubmit() {
       this.validator.validate(this.form, (errors, fields) => {
         if (errors) {
@@ -144,12 +155,6 @@ export default {
         vm.$router.replace('step1');
       }
     });
-  },
-  mounted() {
-    if (this.reg.status && this.reg.status !== '1') {
-      const reg = _.pick(this.reg, ['info', 'contact', 'description']);
-      this.form = _.merge(this.form, reg);
-    }
   },
 };
 </script>
