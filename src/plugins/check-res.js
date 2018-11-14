@@ -13,17 +13,19 @@ const Plugin = {
   install(Vue, options) {
     // 4. 添加实例方法
     Vue.prototype.$checkRes = (res, okText, errText) => {
-      let _okText = _.isFunction(okText) ? okText : '操作成功';
+      let _okText = okText;
       let _errText = errText;
       if (!_.isFunction(okText) && _.isObject(okText) && okText != null) {
-        ({ okText: _okText = '操作成功', errText: _errText } = okText);
+        ({ okText: _okText, errText: _errText } = okText);
       }
       const { errcode = 0, errmsg } = res || {};
       if (errcode === 0) {
         if (_.isFunction(_okText)) {
           return _okText();
         }
-        Message.success(_okText);
+        if (_okText) {
+          Message.success(_okText);
+        }
         return true;
       }
       if (_.isFunction(_errText)) {

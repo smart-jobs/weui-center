@@ -12,6 +12,7 @@ import util from './user-util';
 const { trimData, isNullOrUndefined } = Util;
 const { ErrorCode } = Error;
 
+let currentRequests = 0;
 
 export default class AxiosWrapper {
   constructor({ baseUrl = '', unwrap = true } = {}) {
@@ -43,6 +44,7 @@ export default class AxiosWrapper {
 
   async $request(uri, query = {}, data, options = {}) {
     const url = AxiosWrapper.merge(uri, query);
+    currentRequests += 1;
     Indicator.open({
       spinnerType: 'fading-circle',
     });
@@ -83,7 +85,11 @@ export default class AxiosWrapper {
       console.error(`[AxiosWrapper] 接口请求失败: ${err.config && err.config.url} - ${err.message}`);
       return { errcode: ErrorCode.SERVICE_FAULT, errmsg, details: err.message };
     } finally {
-      Indicator.close();
+      currentRequests -= 1;
+      if (currentRequests <= 0) {
+        currentRequests = 0;
+        Indicator.close();
+      }
     }
   }
 }

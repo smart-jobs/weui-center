@@ -1,25 +1,14 @@
 <template>
   <div>
-    <mt-cell class="mint-field" :title="label" :class="[{'is-nolabel': !label}]" :is-link="true" @click.native="showSelect">
-      <input ref="input" class="mint-field-core" :placeholder="placeholder" :readonly="true" :value="codeName">
-      <span class="mint-field-state" v-if="state" :class="['is-' + state]">
-        <i class="mintui" :class="['mintui-field-' + state]"></i>
-      </span>
-    </mt-cell>
-    <!-- <mt-field :label="label" :value="codeName" :placeholder="placeholder" @click.native="showSelect" :readonly="true" :required="required">
-    </mt-field> -->
+    <mt-field :label="label" :value="codeName" :placeholder="placeholder" @click.native="showSelect" :readonly="true" :required="required">
+    </mt-field>
     <mt-popup v-model="popupVisible" position="right" :modal="false" class="fullscreen">
       <mt-header title="请选择">
         <mt-button slot="left" icon="back" @click="handleBack"></mt-button>
         <mt-button slot="right" @click="handleSelect">选择</mt-button>
       </mt-header>
-      <div class="weui-panel">
-        <div class="weui-panel__hd">{{typeDesc || label}}</div>
-        <div class="weui-panel__bd">
-          <mt-radio v-model="selected" :options="options" class="left">
-          </mt-radio>
-        </div>
-      </div>
+      <mt-radio :title="typeDesc || label" v-model="selected" :options="options" class="left">
+      </mt-radio>
     </mt-popup>
   </div>
 </template>
@@ -35,8 +24,6 @@ export default {
     label: { type: String, required: true },
     required: { String, Boolean },
     placeholder: { type: String },
-    state: { type: String },
-    disableClear: { type: Boolean, default: false },
     type: { type: String, required: true },
     typeDesc: { type: String },
     value: { type: [String, Object], default: '' },
@@ -58,7 +45,6 @@ export default {
       selected: null,
       datas: [],
       level: 0,
-      active: false,
     };
   },
   watch: {
@@ -148,21 +134,6 @@ export default {
 .mint-radiolist.left {
   /deep/ .mint-cell-title {
     text-align: left;
-  }
-}
-.mint-popup {
-  display: flex;
-  flex-direction: column;
-  .weui-panel, .weui-panel__bd {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-  }
-  .weui-panel__bd {
-    overflow-y: scroll;
-    .mint-radiolist {
-      margin-bottom: 20px;
-    }
   }
 }
 </style>
