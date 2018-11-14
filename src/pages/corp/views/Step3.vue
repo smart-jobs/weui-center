@@ -11,7 +11,7 @@
       <p class="weui-btn-area">
         <button class="weui-btn weui-btn_default" @click="$router.push('step2')"
           v-if="register && register.status == '2'">上一步</button>
-        <button class="weui-btn weui-btn_primary" @click="$router.push('/')">完成</button>
+        <button class="weui-btn weui-btn_primary" @click="$router.replace('/')">完成</button>
       </p>
     </div>
   </div>

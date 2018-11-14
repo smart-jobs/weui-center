@@ -36,13 +36,13 @@ export default {
       setStep: types.REG_STEP,
     }),
   },
-  // beforeRouteEnter(to, from, next) {
-  //   next((vm) => {
-  //     if (!vm.userinfo || vm.userinfo.role !== 'corp') {
-  //       vm.$router.replace('/');
-  //     }
-  //   });
-  // },
+  beforeRouteEnter(to, from, next) {
+    next((vm) => {
+      if (!vm.userinfo || vm.userinfo.role !== 'corp') {
+        vm.$router.replace('/');
+      }
+    });
+  },
   computed: {
     ...mapState(['register', 'userinfo']),
     step() {

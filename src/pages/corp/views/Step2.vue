@@ -137,14 +137,14 @@ export default {
   computed: {
     ...mapState({ reg: 'register' }),
   },
-  // beforeRouteEnter(to, from, next) {
-  //   next((vm) => {
-  //     // eslint-disable-next-line no-underscore-dangle
-  //     if (!vm.reg || !vm.reg._id) {
-  //       vm.$router.replace('step1');
-  //     }
-  //   });
-  // },
+  beforeRouteEnter(to, from, next) {
+    next((vm) => {
+      // eslint-disable-next-line no-underscore-dangle
+      if (!vm.reg || !vm.reg._id) {
+        vm.$router.replace('step1');
+      }
+    });
+  },
   mounted() {
     if (this.reg.status && this.reg.status !== '1') {
       const reg = _.pick(this.reg, ['info', 'contact', 'description']);

@@ -118,7 +118,7 @@ export default {
         this.popupVisible = false;
       }
     },
-    showSelect() {
+    showSelect(event) {
       this.popupVisible = true;
     },
   },

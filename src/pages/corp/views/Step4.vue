@@ -2,7 +2,7 @@
   <div>
     <div class="weui-msg__opr-area">
       <p class="weui-btn-area">
-        <button class="weui-btn weui-btn_default" @click="$router.push('/')">返回</button>
+        <button class="weui-btn weui-btn_default" @click="$router.replace('/')">返回</button>
       </p>
     </div>
   </div>
