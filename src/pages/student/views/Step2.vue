@@ -50,14 +50,15 @@
     </div>
     <div class="weui-msg__opr-area">
       <p class="weui-btn-area">
-        <button class="weui-btn weui-btn_primary" @click="onSubmit">完成注册</button>
+        <button class="weui-btn weui-btn_primary" @click="handleRegister">完成注册</button>
       </p>
     </div>
   </div>
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex';
+import { mapState, mapMutations, mapActions } from 'vuex';
+import { Message } from 'element-ui';
 import { MessageBox } from 'mint-ui';
 import * as types from '../store/mutation-types';
 
@@ -73,7 +74,18 @@ export default {
     ...mapMutations({
       setStep: types.REG_STEP,
     }),
-    async handleNext() {
+    ...mapActions(['register']),
+    handleErrors(errors, fields) {
+      Message.error(errors[0].message);
+      this.errors = errors.reduce((p, c) => {
+        // eslint-disable-next-line no-param-reassign
+        p[c.field] = 'error';
+        return p;
+      }, {});
+      // eslint-disable-next-line no-console
+      console.debug(errors, fields);
+    },
+    async handleRegister() {
       const res = await this.register(this.infobase);
       this.$checkRes(res, () => {
         MessageBox.alert('注册学籍信息成功').then(() => {
