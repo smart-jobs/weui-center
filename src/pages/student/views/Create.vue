@@ -4,14 +4,14 @@
       <h1 class="page__title">学生用户注册</h1>
       <p class="page__desc">通过微信注册通行证</p>
     </div>
-    <form ref="form" class="label-right">
+    <div class="label-right">
       <mt-field label="姓名" placeholder="请输入姓名" v-model="form.name" required
         :state="errors.name"></mt-field>
       <mt-field label="手机号" placeholder="请输入手机号" type="number" v-model="form.mobile" required
         :state="errors.mobile"></mt-field>
       <mt-field label="邮箱" placeholder="请输入邮箱地址" type="email" v-model="form.email"  required
         :state="errors.email"></mt-field>
-    </form>
+    </div>
     <div class="weui-btn-area">
         <button class="weui-btn weui-btn_primary" @click="onSubmit">提交</button>
     </div>

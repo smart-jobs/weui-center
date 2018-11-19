@@ -4,12 +4,12 @@
       <el-step title="步骤1" ></el-step>
       <el-step title="步骤2" ></el-step>
     </el-steps>
-    <form ref="form" class="label-right">
+    <div class="label-right">
       <mt-field label="毕业年份" placeholder="请选择毕业年份" v-model="form.year" required
         :state="errors.year"></mt-field>
       <mt-field label="身份证号" placeholder="请输入身份证号" v-model="form.sfzh" required
         :state="errors.sfzh"></mt-field>
-    </form>
+    </div>
     <div class="weui-btn-area">
       <button class="weui-btn weui-btn_primary" @click="onSubmit">下一步</button>
       <button class="weui-btn weui-btn_default" @click="$router.replace('/')">返回</button>

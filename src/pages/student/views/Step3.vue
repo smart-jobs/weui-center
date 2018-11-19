@@ -4,7 +4,7 @@
       <el-step title="步骤1"></el-step>
       <el-step title="步骤2"></el-step>
     </el-steps>
-    <form ref="form" class="label-right">
+    <div class="label-right">
       <mt-field label="毕业年份" placeholder="请选择毕业年份" v-model="form.year" required :state="errors.year" :readonly="true"></mt-field>
       <mt-field label="身份证号" placeholder="请输入身份证号" v-model="form.sfzh" required :state="errors.sfzh" :readonly="true"></mt-field>
       <mt-field label="姓名" placeholder="请输入姓名" v-model="form.xm" required :state="errors.xm"></mt-field>
@@ -12,7 +12,7 @@
       <mt-field label="院校名称" placeholder="请输入院校名称" v-model="form.yxmc" required :state="errors.yxmc"></mt-field>
       <mt-field label="专业名称" placeholder="请输入专业名称" v-model="form.zymc" required :state="errors.zymc"></mt-field>
       <code-field label="学历" type="xl" mode="name" placeholder="请输入学历" v-model="form.xl" required :state="errors.xl"></code-field>
-    </form>
+    </div>
     <div class="weui-msg__opr-area">
       <p class="weui-btn-area">
         <button class="weui-btn weui-btn_primary" @click="onSubmit">完成注册</button>

@@ -1,11 +1,11 @@
 <template>
   <div>
-    <form ref="form" class="label-right">
+    <div class="label-right">
       <mt-field label="企业名称" placeholder="请输入企业名称" v-model="form.corpname" required
         :state="errors.corpname" :readonly="!isFirst"></mt-field>
       <code-field label="注册学校" placeholder="请选择注册学校" type="unit" v-model="form.unit" required
         :state="errors.unit"></code-field>
-    </form>
+    </div>
     <div class="weui-btn-area">
       <button class="weui-btn weui-btn_primary" @click="onSubmit">下一步</button>
       <button class="weui-btn weui-btn_default" @click="$router.replace('/')">返回</button>

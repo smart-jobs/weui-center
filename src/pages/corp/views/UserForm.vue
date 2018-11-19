@@ -4,7 +4,7 @@
       <h1 class="page__title">企业用户注册</h1>
       <p class="page__desc">为企业管理员注册通行证</p>
     </div>
-    <form ref="form" class="label-right">
+    <div class="label-right">
       <mt-field label="姓名" placeholder="请输入企业管理员姓名" v-model="form.name" required
         :state="errors.name"></mt-field>
       <mt-field label="手机号" placeholder="请输入手机号" type="number" v-model="form.mobile" required
@@ -15,7 +15,7 @@
         :state="errors.password"></mt-field>
       <mt-field label="确认" placeholder="请重新输入密码" type="password" v-model="form.confirm" required
         :state="errors.confirm"></mt-field> -->
-    </form>
+    </div>
     <div class="weui-btn-area">
         <button class="weui-btn weui-btn_primary" @click="onSubmit">提交</button>
     </div>

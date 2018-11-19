@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form ref="form" class="label-right">
+    <div class="label-right">
       <div class="weui-cells__title">基本信息</div>
       <div class="weui-cells">
         <code-field label="代码类型" type='corpcode' v-model="form.info.corptype" placeholder="请选择代码类型"
@@ -34,7 +34,7 @@
           </div>
         </div>
       </div>
-    </form>
+    </div>
     <div class="weui-msg__opr-area">
       <p class="weui-btn-area">
         <button class="weui-btn weui-btn_primary" @click="onSubmit">下一步</button>
