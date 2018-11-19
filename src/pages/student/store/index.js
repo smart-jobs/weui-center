@@ -63,7 +63,7 @@ export default new Vuex.Store({
     async createUser({ commit }, payload) {
       // eslint-disable-next-line no-console
       const { name, mobile, email, password } = payload;
-      const res = await this.$axios.$post(api.create, {}, { name, mobile, email, password });
+      const res = await this.$axios.$post(api.create, { name, mobile, email, password });
       if (!res.errcode) {
         const { userinfo, token } = res;
         // 保存用户信息
@@ -74,7 +74,7 @@ export default new Vuex.Store({
     },
     async register({ commit, state }, payload) {
       const _tenant = _.get(state, 'infobase.yxdm');
-      const res = await this.$axios.$post(api.register, { _tenant }, payload);
+      const res = await this.$axios.$post(api.register, payload, { _tenant });
       if (!res.errcode) {
         const { userinfo, token, newReg } = res;
         // 保存用户信息

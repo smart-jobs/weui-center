@@ -6,9 +6,9 @@ import _ from 'lodash';
 import { LOADED, PRESET } from './.dict';
 
 const api = {
-  listItem: catg => `/naf/code/${catg}/list`,
+  listItem: '/naf/code/:catg/list',
   listUnit: '/naf/unit/list',
-  listXzqh: level => `/naf/code/xzqh/list?level=${level}`,
+  listXzqh: '/naf/code/xzqh/list',
 };
 
 // initial state
@@ -56,13 +56,13 @@ export const actions = {
     let res;
     if (payload === 'unit') {
       // LOAD UNIT DICT
-      res = await this.$axios.$get(`${api.listUnit}`);
+      res = await this.$axios.$get(api.listUnit);
     } else if (payload === 'xzqh') {
       // LOAD XZQH DICT
-      res = await this.$axios.$get(api.listXzqh(1));
+      res = await this.$axios.$get(api.listXzqh, { level: 1 });
       if (res.errcode) return res;
       const rs1 = res;
-      res = await this.$axios.$get(api.listXzqh(2));
+      res = await this.$axios.$get(api.listXzqh, { level: 2 });
       if (res.errcode) return res;
       const rs2 = res;
       res = rs1.map((p) => {
@@ -72,7 +72,7 @@ export const actions = {
       });
     } else {
       // LOAD COMMONS DICT
-      res = await this.$axios.$get(`${api.listItem(payload)}`);
+      res = await this.$axios.$get(api.listItem, { catg: payload });
     }
 
     if (!res.errcode) {

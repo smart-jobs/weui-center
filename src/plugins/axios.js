@@ -9,7 +9,7 @@ const Plugin = {
 
   install(vue, options) {
     // 3. 注入组件
-    Vue.mixin({
+    vue.mixin({
       created() {
         if (this.$store && !this.$store.$axios) {
           this.$store.$axios = this.$axios;

@@ -72,7 +72,7 @@ export default new Vuex.Store({
       }
       const { corpid, units = [] } = state.userinfo || {};
       if (corpid && units.length > 0) {
-        res = await this.$axios.$post(api.batch, { corpid }, { units });
+        res = await this.$axios.$post(api.batch, { units }, { params: { corpid } });
         if (!res.errcode) {
           commit(types.UNITS_LOADED, res);
         }
@@ -82,7 +82,7 @@ export default new Vuex.Store({
     async createUser({ commit }, payload) {
       // eslint-disable-next-line no-console
       const { name, mobile, email, password } = payload;
-      const res = await this.$axios.$post(api.create, {}, { name, mobile, email, password });
+      const res = await this.$axios.$post(api.create, { name, mobile, email, password });
       if (!res.errcode) {
         const { userinfo, token } = res;
         // 保存用户信息
@@ -93,7 +93,7 @@ export default new Vuex.Store({
     },
     async register({ commit }, payload) {
       const { corpname, unit } = payload;
-      const res = await this.$axios.$post(api.register, { unit }, { corpname });
+      const res = await this.$axios.$post(api.register, { corpname }, { unit });
       if (!res.errcode) {
         const { userinfo, token, newCorp } = res;
         // 保存用户信息
@@ -105,7 +105,7 @@ export default new Vuex.Store({
     },
     async complete({ state, commit }, payload) {
       const { _tenant, corpid } = state.register;
-      const res = await this.$axios.$post(api.complete, { _tenant, corpid }, payload);
+      const res = await this.$axios.$post(api.complete, payload, { _tenant, corpid });
       if (!res.errcode) {
         commit(types.UNIT_UPDATED, res);
       }

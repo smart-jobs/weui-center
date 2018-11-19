@@ -3,8 +3,6 @@
 
 import _ from 'lodash';
 import Axios from 'axios';
-import { parse, parseQuery } from 'urijs';
-import { stringify } from 'qs';
 import { Util, Error } from 'naf-core';
 import { Indicator } from 'mint-ui';
 import util from './user-util';
@@ -20,34 +18,52 @@ export default class AxiosWrapper {
     this.unwrap = unwrap;
   }
 
-  // 合并uri和query
+  // 替换uri中的参数变量
   static merge(uri, query = {}) {
-    const parsed = parse(uri);
-    if (parsed.query) {
-      query = { ...query, ...parseQuery(parsed.query) };
-      uri = parsed.path;
+    if (!uri.includes(':')) {
+      return uri;
     }
-    query = stringify(trimData(query));
-    if (query) {
-      uri += `?${query}`;
+    const keys = [];
+    const regexp = /\/:([a-z0-9_]+)/ig;
+    let res;
+    // eslint-disable-next-line no-cond-assign
+    while ((res = regexp.exec(uri)) != null) {
+      keys.push(res[1]);
     }
+    keys.forEach((key) => {
+      if (!isNullOrUndefined(query[key])) {
+        uri = uri.replace(`:${key}`, query[key]);
+      }
+    });
     return uri;
   }
 
-  $get(uri, query = {}, options = {}) {
-    return this.$request(uri, query, null, options);
+  $get(uri, query, options) {
+    return this.$request(uri, null, query, options);
   }
 
-  $post(uri, query = {}, data = {}, options = {}) {
-    return this.$request(uri, query, data, options);
+  $post(uri, data = {}, query, options) {
+    return this.$request(uri, data, query, options);
   }
 
-  async $request(uri, query = {}, data, options = {}) {
-    const url = AxiosWrapper.merge(uri, query);
+  async $request(uri, data, query, options) {
+    // TODO: 合并query和options
+    if (_.isObject(query) && _.isObject(options)) {
+      options = { ...options, params: query, method: 'get' };
+    } else if (_.isObject(query) && !query.params) {
+      options = { params: query };
+    } else if (_.isObject(query) && query.params) {
+      options = query;
+    }
+    if (!options) options = {};
+    if (options.params) options.params = trimData(options.params);
+    const url = AxiosWrapper.merge(uri, options.params);
+
     currentRequests += 1;
     Indicator.open({
       spinnerType: 'fading-circle',
     });
+
     try {
       const axios = Axios.create({
         baseURL: this.baseUrl,
