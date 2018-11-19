@@ -10,7 +10,7 @@
   "dependencies": {
     "async-validator": "^1.10.0",
     "axios": "^0.18.0",
-    "element-ui": "^2.4.9",
+    "element-ui": "^2.4.10",
     "lodash": "^4.17.11",
     "mint-ui": "^2.2.13",
     "moment": "^2.22.2",
@@ -24,14 +24,14 @@
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.1.1",
-    "@vue/cli-plugin-eslint": "^3.1.1",
-    "@vue/cli-service": "^3.1.1",
+    "@vue/cli-plugin-eslint": "^3.1.5",
+    "@vue/cli-service": "^3.1.4",
     "@vue/eslint-config-airbnb": "^4.0.0",
     "babel-eslint": "^10.0.1",
     "babel-plugin-component": "^1.1.1",
-    "eslint": "^5.8.0",
-    "eslint-plugin-vue": "^5.0.0-0",
-    "less": "^3.0.4",
+    "eslint": "^5.9.0",
+    "eslint-plugin-vue": "^5.0.0-beta.4",
+    "less": "^3.8.1",
     "less-loader": "^4.1.0",
     "vue-cli-plugin-element": "^1.0.0",
     "vue-template-compiler": "^2.5.17"
