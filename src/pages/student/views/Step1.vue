@@ -12,6 +12,7 @@
     </form>
     <div class="weui-btn-area">
       <button class="weui-btn weui-btn_primary" @click="onSubmit">下一步</button>
+      <button class="weui-btn weui-btn_default" @click="$router.replace('/')">返回</button>
     </div>
   </div>
 </template>
