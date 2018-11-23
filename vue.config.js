@@ -14,13 +14,6 @@ module.exports = {
     },
   },
 
-  pluginOptions: {
-    axios: {
-      // 插件可以作为 `options.pluginOptions.axios` 访问这些选项。
-      baseUrl: '/weixin/api',
-    },
-  },
-
   devServer: {
     before(app) {
       app.use((req, res, next) => {

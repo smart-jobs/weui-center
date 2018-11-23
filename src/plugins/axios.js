@@ -3,7 +3,6 @@
 
 import Vue from 'vue';
 import AxiosWrapper from '@/util/axios-wrapper';
-// import { pluginOptions } from '../../vue.config';
 
 const Plugin = {
 
@@ -22,4 +21,4 @@ const Plugin = {
 
 };
 
-Vue.use(Plugin, { baseUrl: '/weixin/api' });
+Vue.use(Plugin, { baseUrl: process.env.VUE_APP_AXIOS_BASE_URL });
