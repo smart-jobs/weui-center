@@ -1,14 +1,12 @@
 <template>
   <div>
     <el-steps :active="0" finish-status="success" simple>
-      <el-step title="步骤1" ></el-step>
-      <el-step title="步骤2" ></el-step>
+      <el-step title="步骤1"></el-step>
+      <el-step title="步骤2"></el-step>
     </el-steps>
     <div class="label-right">
-      <mt-field label="毕业年份" placeholder="请选择毕业年份" v-model="form.year" required
-        :state="errors.year"></mt-field>
-      <mt-field label="身份证号" placeholder="请输入身份证号" v-model="form.sfzh" required
-        :state="errors.sfzh"></mt-field>
+      <year-field label="毕业年份" placeholder="请选择毕业年份" v-model="form.year" required :state="errors.year"></year-field>
+      <mt-field label="身份证号" placeholder="请输入身份证号" v-model="form.sfzh" required :state="errors.sfzh"></mt-field>
     </div>
     <div class="weui-btn-area">
       <button class="weui-btn weui-btn_primary" @click="onSubmit">下一步</button>
@@ -23,11 +21,15 @@ import Validator from 'async-validator';
 import { Message } from 'element-ui';
 import { MessageBox } from 'mint-ui';
 import * as types from '../store/mutation-types';
+import YearField from '@/components/YearField.vue';
 
 export default {
   name: 'Step1',
   metaInfo: {
     title: '创建企业信息',
+  },
+  components: {
+    YearField,
   },
   mounted() {
     this.setStep(0);
@@ -48,7 +50,8 @@ export default {
   },
   methods: {
     ...mapMutations({
-      setStep: types.REG_STEP, setReg: types.REG_FORM,
+      setStep: types.REG_STEP,
+      setReg: types.REG_FORM,
     }),
     ...mapActions(['findBase']),
     onSubmit() {
@@ -74,9 +77,11 @@ export default {
       const res = await this.findBase(this.form);
       this.$checkRes(res, () => {
         if (!res) {
-          MessageBox.alert('非本省高校毕业生，请完善学籍信息').then(() => {
-            this.setReg(this.form);
-            this.$router.replace('/register/step3');
+          MessageBox.confirm('未在库中找到您的学籍信息，可能输入信息有误，或者您不是本省应届毕业生。是否手动完善学籍信息？').then((action) => {
+            if (action === 'confirm') {
+              this.setReg(this.form);
+              this.$router.replace('/register/step3');
+            }
           });
         } else {
           this.$router.replace('/register/step2');

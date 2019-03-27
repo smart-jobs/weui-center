@@ -8,7 +8,7 @@
       <mt-field label="毕业年份" placeholder="请选择毕业年份" v-model="form.year" required :state="errors.year" :readonly="true"></mt-field>
       <mt-field label="身份证号" placeholder="请输入身份证号" v-model="form.sfzh" required :state="errors.sfzh" :readonly="true"></mt-field>
       <mt-field label="姓名" placeholder="请输入姓名" v-model="form.xm" required :state="errors.xm"></mt-field>
-      <code-field label="性别" type="xb" mode="name" placeholder="请输入性别" v-model="form.xb" required :state="errors.xb"></code-field>
+      <code-field label="性别" type="xb" mode="name" placeholder="请选择性别" v-model="form.xb" required :state="errors.xb"></code-field>
       <mt-field label="院校名称" placeholder="请输入院校名称" v-model="form.yxmc" required :state="errors.yxmc"></mt-field>
       <mt-field label="专业名称" placeholder="请输入专业名称" v-model="form.zymc" required :state="errors.zymc"></mt-field>
       <code-field label="学历" type="xl" mode="name" placeholder="请输入学历" v-model="form.xl" required :state="errors.xl"></code-field>
