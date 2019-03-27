@@ -77,7 +77,10 @@ export default {
       const res = await this.findBase(this.form);
       this.$checkRes(res, () => {
         if (!res) {
-          MessageBox.confirm('未在库中找到您的学籍信息，可能输入信息有误，或者您不是本省应届毕业生。是否手动完善学籍信息？').then((action) => {
+          MessageBox.confirm('未查到您的学籍信息，请核实输入信息或联系学校；如果您不是本省应届毕业生，请手动完善信息！', '提示', {
+            confirmButtonText: '手动完善',
+            cancelButtonText: '重新输入',
+          }).then((action) => {
             if (action === 'confirm') {
               this.setReg(this.form);
               this.$router.replace('/register/step3');

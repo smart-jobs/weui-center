@@ -31,7 +31,14 @@ export default {
     state: { type: String },
     value: { type: [String, Object], default: '' },
   },
-  created() {},
+  created() {
+    const year = new Date().getFullYear();
+    // eslint-disable-next-line no-plusplus
+    for (let i = year - 3; i <= year + 1; i++) {
+      this.datas.push(i.toString());
+    }
+    this.slots[0].values = this.datas;
+  },
   data() {
     return {
       popupVisible: false,
