@@ -10,8 +10,7 @@ const Plugin = {
     // 3. 注入组件
     vue.mixin({
       created() {
-        // eslint-disable-next-line no-underscore-dangle
-        const isRoot = this._uid === 0;
+        const isRoot = this.constructor === Vue;
         if (isRoot) {
           const el = document.getElementById('loading');
           if (el) el.style.display = 'none';
