@@ -7,6 +7,7 @@ import '@/plugins/element';
 import '@/plugins/mint-ui';
 import '@/plugins/axios';
 import '@/plugins/check-res';
+import '@/plugins/loading';
 
 Vue.config.productionTip = false;
 
