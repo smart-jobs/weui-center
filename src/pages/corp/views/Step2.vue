@@ -11,7 +11,8 @@
         <code-field label="行业类别" type="hylb" mode="pair" v-model="form.info.industry" placeholder="请选择行业类别" required></code-field>
         <code-field label="所在城市" type="xzqh" mode="pair" v-model="form.info.city" placeholder="请选择城市" required></code-field>
         <mt-field label="企业法人" v-model="form.info.legalPerson" placeholder="请输入企业法人" required></mt-field>
-        <mt-field label="注册时间" type="date" v-model="form.info.registerTime" placeholder="请选择工商注册时间" required></mt-field>
+        <!-- <mt-field label="注册时间" type="date" v-model="form.info.registerTime" placeholder="请选择工商注册时间" required></mt-field> -->
+        <mt-field label="注册时间" v-model="form.info.registerTime" placeholder="请选择工商注册时间" required></mt-field>
         <mt-field label="注册资金" v-model="form.info.registerMoney" placeholder="请输入注册资金" required></mt-field>
       </div>
 
